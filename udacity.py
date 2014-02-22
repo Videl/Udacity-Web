@@ -1,32 +1,25 @@
 import webapp2
 
 form="""
-<form method="get" action="/testform">
-    <select name="q">
-	<option value="1">one</option>
-	<option value="2">two</option>
-	<option value="3">three</option>
-    </select>
+<form method="post" action="/">
+    <input type="text" name="q" />
     <input type="submit" />
+    <div>%(message)s</div>
 </form>
 """
 
 class MainPage(webapp2.RequestHandler):
+    def write_form(self, message = ""):
+	self.response.out.write(form % {"message": message})
 
     def get(self):
-        #self.response.headers['Content-Type'] = 'text/plain'
-        self.response.write(form)
+        self.write_form()
+        
+    def post(self):
+	entered = self.request.get("q")
+	self.write_form(entered)
 
-class TestHandler(webapp2.RequestHandler):
-
-    def get(self):
-	request = self.request.get("q")
-        self.response.write(request)
-        #self.response.headers['Content-Type'] = 'text/plain'
-        #self.response.write(self.request)
-        self.response.write("<br /><a href=\"/\">/</a>")
 
 application = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/testform', TestHandler),
 ], debug=True)
