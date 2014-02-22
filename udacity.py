@@ -1,10 +1,12 @@
 import webapp2
+import rot13
 
 form="""
 <form method="post" action="/">
-    <input type="text" name="q" />
+    <p>Enter some text to ROT13:</p>
+<textarea name="text">%(message)s</textarea>
+    <br />
     <input type="submit" />
-    <div>%(message)s</div>
 </form>
 """
 
@@ -16,8 +18,9 @@ class MainPage(webapp2.RequestHandler):
         self.write_form()
         
     def post(self):
-	entered = self.request.get("q")
-	self.write_form(entered)
+	source = self.request.get("text")
+	transformed = rot13.parse(source)
+	self.write_form(transformed)
 
 
 application = webapp2.WSGIApplication([
