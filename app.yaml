@@ -9,5 +9,5 @@ handlers:
   script: udacity.application
 
 libraries:
-- name: webapp2
+- name: jinja2
   version: latest
