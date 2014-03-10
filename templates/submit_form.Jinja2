@@ -5,11 +5,14 @@
 {% block content %}
         <h1>Submit a post</h1>
         <form action="/blog/newpost" method="post">
-            <input type="text" name="subject" /> <br/>
-            <textarea name="content">
-            </textarea> <br />
+            <input type="text" name="subject" value="{{ subject }}" /> <br/>
+            <textarea name="content">{{ content }}</textarea> <br />
 
             <input type="submit" />
         </form>
+
+        {% if error %}
+            <p>Error : {{ error }}</p>
+        {% endif %}
 
 {% endblock %}
