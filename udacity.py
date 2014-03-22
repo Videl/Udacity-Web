@@ -90,12 +90,13 @@ class MainPage(webapp2.RequestHandler):
                             message_verify,
                             message_mail)
         else:
-            self.redirect("/welcome?username=" + input_username)
+            self.response.headers.add_header("Set-Cookie", "username=%s" % str(input_username))
+            self.redirect("/welcome")
 
 
 class WelcomePage(webapp2.RequestHandler):
     def get(self):
-        username = self.request.get("username")
+        username = self.request.cookies.get("username", None)
         if username:
             self.response.write("<h1>Welcome, " + username + "!")
         else:
