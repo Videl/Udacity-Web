@@ -1,9 +1,13 @@
 import webapp2
 import re
+import User
+from WelcomePage import WelcomePage
+from LoginPage import LoginPage
+from LogoutPage import LogoutPage
 
 form = """
 <h1>Signup</h1>
-<form method="post" action="/">
+<form method="post" action="/signup">
     <dl>
 	<dt>Username</dt>
 	    <dd><input type="text" name="username" value="%(past_username)s" /> %(username)s</dd>
@@ -90,21 +94,28 @@ class MainPage(webapp2.RequestHandler):
                             message_verify,
                             message_mail)
         else:
-            self.response.headers.add_header("Set-Cookie", "username=%s" % str(input_username))
+            # Save user
+            new_user = User.User()
+
+            new_user.username = input_username
+            new_user.password = input_pass
+            new_user.salt = "hahaha"
+            new_user.email = input_mail
+            new_user.put()
+            user_id = new_user.key.id()
+
+            # Create a cookie containing the user id + a hash of ...
+            self.response.headers.add_header("Set-Cookie", "user_id=%d" % user_id)
+
+            # then redirect
             self.redirect("/welcome")
 
 
-class WelcomePage(webapp2.RequestHandler):
-    def get(self):
-        username = self.request.cookies.get("username", None)
-        if username:
-            self.response.write("<h1>Welcome, " + username + "!")
-        else:
-            self.redirect("/")
-
 
 application = webapp2.WSGIApplication([
-                                          ('/', MainPage),
+                                          ('/signup', MainPage),
                                           ('/welcome', WelcomePage),
+                                          ('/login', LoginPage),
+                                          ('/logout', LogoutPage),
                                       ], debug=True)
 
