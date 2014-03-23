@@ -17,5 +17,5 @@ class WelcomePageInJSON(webapp2.RequestHandler):
             json_post["content"] = post.content
             post_list.append(json_post)
 
-        #template = jinja_environment.get_template('home.Jinja2')
+        self.response.headers['Content-Type'] = "application/json"
         self.response.out.write(json.dumps(post_list))

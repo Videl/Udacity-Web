@@ -13,6 +13,7 @@ from LoginWelcome import LoginWelcome
 application = webapp2.WSGIApplication([
     ('/blog', WelcomePage),
     ('/blog.json', WelcomePageInJSON),
+    ('/blog/.json', WelcomePageInJSON),
     ('/blog/newpost', SubmitPage),
     ('/blog/[0-9]*', GetPost),
     ('/blog/[0-9]*\.json$', GetPostInJSON),

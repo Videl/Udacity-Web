@@ -104,4 +104,4 @@ class MainPage(webapp2.RequestHandler):
             self.response.headers.add_header("Set-Cookie", "user_id=%d" % user_id)
 
             # then redirect
-            self.redirect("/welcome")
+            self.redirect("/blog/welcome")

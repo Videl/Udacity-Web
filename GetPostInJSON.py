@@ -18,6 +18,5 @@ class GetPostInJSON(webapp2.RequestHandler):
         json_post["subject"] = post.subject
         json_post["content"] = post.content
 
-        #template = jinja_environment.get_template('post.Jinja2')
-        #self.response.out.write(template.render(values))
+        self.response.headers['Content-Type'] = "application/json"
         self.response.out.write(json.dumps(json_post))

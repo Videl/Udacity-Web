@@ -33,15 +33,13 @@ class LoginPage(webapp2.RequestHandler):
         user = user.fetch(1)
 
 
-
-
         if len(user) == 1:
             user = user[0]
             # Create a cookie containing the user id + a hash of ...
             self.response.headers.add_header("Set-Cookie", "user_id=%d" % user.key.id())
 
             # then redirect
-            self.redirect("/welcome")
+            self.redirect("/blog/welcome")
         else:
             login_err = ""
             pass_err = ""

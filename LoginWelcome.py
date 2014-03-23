@@ -11,6 +11,6 @@ class LoginWelcome(webapp2.RequestHandler):
             if user:
                 self.response.out.write("<h1>Welcome, %s !</h1>" % user.username)
             else:
-                self.redirect("/signup")
+                self.redirect("/blog/signup")
         else:
-                self.redirect("/signup")
+                self.redirect("/blog/signup")
