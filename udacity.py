@@ -1,7 +1,9 @@
 import webapp2
 import os
 import jinja2
-import binascii
+from GetPostInJSON import GetPostInJSON
+
+
 from google.appengine.ext import ndb
 
 jinja_environment = jinja2.Environment(autoescape=True,
@@ -80,6 +82,7 @@ class SubmitPage(webapp2.RequestHandler):
 application = webapp2.WSGIApplication([
     ('/blog', WelcomePage),
     ('/blog/newpost', SubmitPage),
-    ('/blog/[0-9].*', GetPost),
+    ('/blog/[0-9]*', GetPost),
+    ('/blog/[0-9]*\.json$', GetPostInJSON),
 ], debug=True)
 
