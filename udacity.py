@@ -2,6 +2,8 @@ import webapp2
 import os
 import jinja2
 from GetPostInJSON import GetPostInJSON
+from Post import Post
+from WelcomePageInJSON import WelcomePageInJSON
 
 
 from google.appengine.ext import ndb
@@ -9,9 +11,6 @@ from google.appengine.ext import ndb
 jinja_environment = jinja2.Environment(autoescape=True,
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')))
 
-class Post(ndb.Model):
-    subject = ndb.StringProperty(indexed=True)
-    content = ndb.StringProperty(indexed=False)
 
 class WelcomePage(webapp2.RequestHandler):
     def get(self):
@@ -81,6 +80,7 @@ class SubmitPage(webapp2.RequestHandler):
 
 application = webapp2.WSGIApplication([
     ('/blog', WelcomePage),
+    ('/blog.json', WelcomePageInJSON),
     ('/blog/newpost', SubmitPage),
     ('/blog/[0-9]*', GetPost),
     ('/blog/[0-9]*\.json$', GetPostInJSON),
