@@ -1,16 +1,22 @@
 import webapp2
-from User import User
+from Post import Post
+import jinja2
+import os
+
+
+jinja_environment = jinja2.Environment(autoescape=True,
+    loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')))
+
 
 class WelcomePage(webapp2.RequestHandler):
     def get(self):
-        user_id = self.request.cookies.get("user_id", None)
+        query = Post.query() # retrieve all account entities
 
-        if user_id:
-            user = User.get_by_id(int(user_id))
+        posts = query.fetch()
 
-            if user:
-                self.response.out.write("<h1>Welcome, %s !</h1>" % user.username)
-            else:
-                self.redirect("/signup")
-        else:
-                self.redirect("/signup")
+        values = {
+                'posts': posts
+        }
+
+        template = jinja_environment.get_template('home.Jinja2')
+        self.response.out.write(template.render(values))

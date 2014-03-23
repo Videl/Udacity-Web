@@ -1,0 +1,18 @@
+{% extends 'base.Jinja2' %}
+
+{% block subtitle %}Submit a blog entry{% endblock %}
+
+{% block content %}
+        <h1>Submit a post</h1>
+        <form action="/blog/newpost" method="post">
+            <input type="text" name="subject" value="{{ subject }}" /> <br/>
+            <textarea name="content">{{ content }}</textarea> <br />
+
+            <input type="submit" />
+        </form>
+
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+
+{% endblock %}

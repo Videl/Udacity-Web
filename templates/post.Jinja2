@@ -1,0 +1,11 @@
+{% extends 'base.Jinja2' %}
+
+{% block subtitle %}See post{% endblock %}
+
+{% block content %}
+
+        <h1>{{ post.subject
+        }}</h1>
+        <p>{{ post.content }}</p>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.Jinja2' %}
+
+{% block subtitle %}Home{% endblock %}
+
+{% block content %}
+
+    {% for post in posts %}
+        <h1><a href="/blog/{{ post.key.id() }}">{{ post.subject
+        }}</a></h1>
+        <p>{{ post.content }}</p>
+    {% endfor %}
+
+{% endblock %}
